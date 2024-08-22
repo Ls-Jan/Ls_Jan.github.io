@@ -112,3 +112,33 @@ int main() {
 
 <br>
 
+### 额外示例-Python
+
+如果上面的代码还不够直观，这里将补充一份Python示例代码以进一步说明多继承的潜在隐患，
+虽然下例代码仅仅只是单继承，重写了Init函数，但都已经出现了调用错误，更不用说多继承可能会出现的公有函数同名问题。
+
+```py
+class A:
+	def __init__(self):
+		self.a=[]
+		self.Init()#此处调用的是派生类的Init，即调用的是B.Init，明显的，此时self.b并没有定义，该句执行时必然报错
+	def Init(self):
+		self.a.append('A')
+
+class B(A):
+	def __init__(self):
+		super().__init__()
+		self.b=[]
+		self.Init()
+	def Init(self):
+		super().Init()
+		self.b.append('B')
+
+B()
+```
+
+![额外示例-Python](./Demo/额外示例-Python.png)
+
+
+
+
